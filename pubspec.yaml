@@ -10,6 +10,7 @@ dependencies:
   bluetooth_low_energy: ^4.0.0
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -18,3 +19,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/
+  
+  fonts:
+    - family: Stencil
+      fonts:
+        - asset: assets/AllertaStencil-Regular.ttf
+          weight: 400
