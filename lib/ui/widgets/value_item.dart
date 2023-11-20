@@ -31,7 +31,13 @@ class _ValueItemState extends State<ValueItem> {
             color: Color(0xFFA7A9AC),
           ),
         ),
-        const SizedBox(width: 24.0),
+        SizedBox(
+          width: widget.type == 'I'
+              ? 28.0
+              : widget.type == 'P'
+                  ? 12.0
+                  : 4.0,
+        ),
         Column(
           children: [
             IconButton(
@@ -52,7 +58,6 @@ class _ValueItemState extends State<ValueItem> {
               iconSize: 24.0,
               color: const Color(0xFFF5D22E),
             ),
-            const SizedBox(height: 8.0),
             Container(
               width: 32.0,
               height: 48.0,
@@ -74,7 +79,6 @@ class _ValueItemState extends State<ValueItem> {
                 ),
               ),
             ),
-            const SizedBox(height: 8.0),
             IconButton(
               onPressed: () {},
               icon: const Icon(Icons.arrow_drop_down_circle_outlined),
@@ -97,7 +101,6 @@ class _ValueItemState extends State<ValueItem> {
               iconSize: 24.0,
               color: const Color(0xFFF5D22E),
             ),
-            const SizedBox(height: 8.0),
             Container(
               width: 32.0,
               height: 48.0,
@@ -119,7 +122,6 @@ class _ValueItemState extends State<ValueItem> {
                 ),
               ),
             ),
-            const SizedBox(height: 8.0),
             IconButton(
               onPressed: () {},
               icon: const Icon(Icons.arrow_drop_down_circle_outlined),
@@ -142,7 +144,6 @@ class _ValueItemState extends State<ValueItem> {
               iconSize: 24.0,
               color: const Color(0xFFF5D22E),
             ),
-            const SizedBox(height: 8.0),
             Container(
               width: 32.0,
               height: 48.0,
@@ -164,7 +165,6 @@ class _ValueItemState extends State<ValueItem> {
                 ),
               ),
             ),
-            const SizedBox(height: 8.0),
             IconButton(
               onPressed: () {},
               icon: const Icon(Icons.arrow_drop_down_circle_outlined),
@@ -187,7 +187,6 @@ class _ValueItemState extends State<ValueItem> {
               iconSize: 24.0,
               color: const Color(0xFFF5D22E),
             ),
-            const SizedBox(height: 8.0),
             Container(
               width: 32.0,
               height: 48.0,
@@ -209,7 +208,6 @@ class _ValueItemState extends State<ValueItem> {
                 ),
               ),
             ),
-            const SizedBox(height: 8.0),
             IconButton(
               onPressed: () {},
               icon: const Icon(Icons.arrow_drop_down_circle_outlined),
