@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fortaleza_maker/data/controller.dart';
 import 'package:fortaleza_maker/ui/widgets/custom_textformfield.dart';
@@ -12,12 +15,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final flutterReactiveBle = FlutterReactiveBle();
   late Controller controller;
   TextEditingController responseController = TextEditingController();
 
   @override
   void initState() {
     controller = Controller();
+    flutterReactiveBle.scanForDevices(
+        withServices: [], scanMode: ScanMode.lowLatency).listen((device) {
+      log(device.toString());
+    }, onError: (e) {
+      log(e.toString());
+    });
     super.initState();
   }
 
