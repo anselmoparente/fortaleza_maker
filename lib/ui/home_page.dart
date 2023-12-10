@@ -50,6 +50,29 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            const Divider(
+              thickness: 1.0,
+              color: Color(0xFFA7A9AC),
+            ),
+            Text(
+              'VELOCIDADE MAX: ${controller.velocity.toStringAsFixed(2)}',
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontFamily: 'Stencil',
+                color: Color(0xFFA7A9AC),
+              ),
+            ),
+            Slider(
+              min: 0.0,
+              max: 1.5,
+              divisions: 30,
+              label: controller.velocity.toStringAsFixed(2),
+              value: controller.velocity,
+              onChanged: (double value) => setState(() {
+                controller.changeVelocity(value);
+              }),
+              onChangeEnd: (double value) {},
+            ),
           ],
         ),
       ),

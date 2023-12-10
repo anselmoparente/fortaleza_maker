@@ -16,6 +16,9 @@ class Controller extends ChangeNotifier {
   List<String> _d = ['0', '0', '0', '0'];
   List<String> get d => _d;
 
+  double _velocity = 0.0;
+  double get velocity => _velocity;
+
   void changeValueP({required int value, required int position}) {
     if (position >= 0 && position < _p.length) {
       _p[position] = value.toString();
@@ -34,6 +37,11 @@ class Controller extends ChangeNotifier {
   void changeValueD({required int value, required int position}) {
     _d[position] = value.toString();
     notifyListeners();
+  }
+
+  void changeVelocity(double value) {
+    _velocity = value;
+    print(_velocity);
   }
 
   Future<void> checkPermissions() async {
