@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Controller extends ChangeNotifier {
+  final flutterReactiveBle = FlutterReactiveBle();
+
   List<String> _p = ['0', '0', '0', '0'];
   List<String> get p => _p;
 
@@ -31,5 +34,30 @@ class Controller extends ChangeNotifier {
   void changeValueD({required int value, required int position}) {
     _d[position] = value.toString();
     notifyListeners();
+  }
+
+  Future<void> checkPermissions() async {
+    final statusLocation = await Permission.location.status;
+    final statusScan = await Permission.bluetoothScan.status;
+    final statusConnect = await Permission.bluetoothConnect.status;
+
+    if (!statusLocation.isGranted) {
+      await Permission.location.request();
+    }
+    if (!statusScan.isGranted) {
+      await Permission.bluetoothScan.request();
+    }
+    if (!statusConnect.isGranted) {
+      await Permission.bluetoothConnect.request();
+    }
+  }
+
+  void searchDevices() async {
+    flutterReactiveBle.scanForDevices(
+        withServices: [], scanMode: ScanMode.lowLatency).listen((device) {
+      log(device.name);
+    }, onError: (e) {
+      log(e.toString());
+    });
   }
 }
