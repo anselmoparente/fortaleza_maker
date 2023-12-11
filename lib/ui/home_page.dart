@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
               color: Color(0xFFA7A9AC),
             ),
             Text(
-              'VELOCIDADE MAX: ${controller.velocity.toStringAsFixed(2)}',
+              'VELOCIDADE MAX: ${controller.velocity}',
               style: const TextStyle(
                 fontSize: 16.0,
                 fontFamily: 'Stencil',
@@ -66,10 +66,11 @@ class _HomePageState extends State<HomePage> {
               min: 0.0,
               max: 1.5,
               divisions: 30,
-              label: controller.velocity.toStringAsFixed(2),
+              label: controller.velocity.toString(),
               value: controller.velocity,
               onChanged: (double value) => setState(() {
-                controller.changeVelocity(value);
+                String valueSend = value.toStringAsFixed(2);
+                controller.changeVelocity(double.parse(valueSend));
               }),
               onChangeEnd: (double value) {},
             ),
