@@ -28,54 +28,104 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F7),
-      body: SizedBox(
-        width: size.width,
-        height: size.height,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset('assets/fortaleza_maker_logo.svg'),
-            Container(
-              width: size.width * 0.8,
-              padding: const EdgeInsets.only(top: 24.0),
-              child: CustomTextFormField(controller: responseController),
+      body: Stack(
+        children: [
+          SizedBox(
+            width: size.width,
+            height: size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset('assets/fortaleza_maker_logo.svg'),
+                Container(
+                  width: size.width * 0.8,
+                  margin: const EdgeInsets.only(top: 24.0),
+                  child: CustomTextFormField(controller: responseController),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 16.0),
+                  child: Column(
+                    children: [
+                      ValueItem(type: 'P', controller: controller),
+                      const Divider(
+                        thickness: 1.0,
+                        color: Color(0xFFA7A9AC),
+                      ),
+                      ValueItem(type: 'I', controller: controller),
+                      const Divider(
+                        thickness: 1.0,
+                        color: Color(0xFFA7A9AC),
+                      ),
+                      ValueItem(type: 'D', controller: controller),
+                    ],
+                  ),
+                ),
+                const Divider(
+                  thickness: 1.0,
+                  color: Color(0xFFA7A9AC),
+                ),
+                Text(
+                  'VELOCIDADE MAX: ${controller.velocity}',
+                  style: const TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: 'Stencil',
+                    color: Color(0xFFA7A9AC),
+                  ),
+                ),
+                SizedBox(
+                  width: size.width * 0.85,
+                  child: Slider(
+                    min: 0.0,
+                    max: 1.5,
+                    divisions: 30,
+                    activeColor: const Color(0xFFF5D22E),
+                    thumbColor: const Color(0xFFF5D22E),
+                    label: controller.velocity.toString(),
+                    value: controller.velocity,
+                    onChanged: (double value) => setState(() {
+                      String valueSend = value.toStringAsFixed(2);
+                      controller.changeVelocity(double.parse(valueSend));
+                    }),
+                    onChangeEnd: (double value) {},
+                  ),
+                ),
+                Container(
+                  width: size.width * 0.75,
+                  margin: const EdgeInsets.only(top: 24.0),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: const Color(0xFFF5D22E),
+                    ),
+                    child: const Text(
+                      'INICIAR',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.black,
+                        fontFamily: 'Stencil',
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ],
             ),
-            Container(
-              margin: EdgeInsets.only(right: size.width * 0.1),
-              child: Column(
-                children: [
-                  ValueItem(type: 'P', controller: controller),
-                  ValueItem(type: 'I', controller: controller),
-                  ValueItem(type: 'D', controller: controller),
-                ],
+          ),
+          Positioned(
+            right: 0.0,
+            top: 32.0,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFF5D22E),
+                shape: const CircleBorder(),
               ),
-            ),
-            const Divider(
-              thickness: 1.0,
-              color: Color(0xFFA7A9AC),
-            ),
-            Text(
-              'VELOCIDADE MAX: ${controller.velocity}',
-              style: const TextStyle(
-                fontSize: 16.0,
-                fontFamily: 'Stencil',
-                color: Color(0xFFA7A9AC),
+              child: const Icon(
+                Icons.bluetooth,
+                color: Colors.black,
               ),
+              onPressed: () {},
             ),
-            Slider(
-              min: 0.0,
-              max: 1.5,
-              divisions: 30,
-              label: controller.velocity.toString(),
-              value: controller.velocity,
-              onChanged: (double value) => setState(() {
-                String valueSend = value.toStringAsFixed(2);
-                controller.changeVelocity(double.parse(valueSend));
-              }),
-              onChangeEnd: (double value) {},
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
