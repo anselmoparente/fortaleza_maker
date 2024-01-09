@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fortaleza_maker/data/controller.dart';
 import 'package:fortaleza_maker/ui/widgets/custom_textformfield.dart';
@@ -14,11 +15,20 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late Controller controller;
   TextEditingController responseController = TextEditingController();
+  BluetoothManager bluetoothManager = BluetoothManager.instance;
 
   @override
   void initState() {
     controller = Controller();
     controller.checkPermissions();
+
+    bluetoothManager.startScan(timeout: const Duration(seconds: 4));
+    bluetoothManager.scanResults.listen((event) {
+      for(int i = 0; i < event.length; i ++){
+        print(event[i].name);
+      }
+    });
+
     super.initState();
   }
 
