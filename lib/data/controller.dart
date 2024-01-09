@@ -7,13 +7,13 @@ import 'package:permission_handler/permission_handler.dart';
 class Controller extends ChangeNotifier {
   final flutterReactiveBle = FlutterReactiveBle();
 
-  List<String> _p = ['0', '0', '0', '0'];
+  final List<String> _p = ['0', '0', '0', '0'];
   List<String> get p => _p;
 
-  List<String> _i = ['0', '0', '0', '0'];
+  final List<String> _i = ['0', '0', '0', '0'];
   List<String> get i => _i;
 
-  List<String> _d = ['0', '0', '0', '0'];
+  final List<String> _d = ['0', '0', '0', '0'];
   List<String> get d => _d;
 
   double _velocity = 0.0;
@@ -41,7 +41,6 @@ class Controller extends ChangeNotifier {
 
   void changeVelocity(double value) {
     _velocity = value;
-    print(_velocity);
   }
 
   Future<void> checkPermissions() async {
