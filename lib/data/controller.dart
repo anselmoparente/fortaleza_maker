@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
+import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Controller extends ChangeNotifier {
-  final flutterReactiveBle = FlutterReactiveBle();
+  final BluetoothManager _bluetoothManager = BluetoothManager.instance;
 
   final List<String> _p = ['0', '0', '0', '0'];
   List<String> get p => _p;
@@ -60,11 +60,11 @@ class Controller extends ChangeNotifier {
   }
 
   void searchDevices() async {
-    flutterReactiveBle.scanForDevices(
-        withServices: [], scanMode: ScanMode.lowLatency).listen((device) {
-      log(device.name);
-    }, onError: (e) {
-      log(e.toString());
+    _bluetoothManager.startScan(timeout: const Duration(seconds: 4));
+    _bluetoothManager.scanResults.listen((event) {
+      for (int i = 0; i < event.length; i++) {
+        print(event[i].name);
+      }
     });
   }
 }
