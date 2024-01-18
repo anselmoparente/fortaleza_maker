@@ -61,8 +61,10 @@ class Controller extends ChangeNotifier {
   }
 
   List<BluetoothDevice> devices = [];
+  bool isConnected = false;
 
   Future<void> searchDevices() async {
+    devices.clear();
     bluetoothManager.startScan(timeout: const Duration(seconds: 5));
     bluetoothManager.scanResults.listen((event) {
       for (int i = 0; i < event.length; i++) {
@@ -79,12 +81,17 @@ class Controller extends ChangeNotifier {
     });
   }
 
-  void writeData(String message) async {
-    List<int> bytes = utf8.encode(message).toList();
+  void writeData() async {
+    List<int> bytes = utf8.encode('').toList();
     await bluetoothManager.writeData(bytes);
   }
 
-  void connectToDevice(BluetoothDevice device) {
-    bluetoothManager.connect(device).then((value) => print(value));
+  bool connectToDevice(BluetoothDevice device) {
+    bluetoothManager.connect(device);
+    return true;
+  }
+
+  void disconnectToDevice() {
+    bluetoothManager.disconnect();
   }
 }

@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fortaleza_maker/data/controller.dart';
+import 'package:fortaleza_maker/ui/widgets/conection_dialog.dart';
 import 'package:fortaleza_maker/ui/widgets/custom_textformfield.dart';
 import 'package:fortaleza_maker/ui/widgets/value_item.dart';
 
@@ -96,15 +100,54 @@ class _HomePageState extends State<HomePage> {
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xFFF5D22E),
                     ),
-                    child: const Text(
-                      'INICIAR',
-                      style: TextStyle(
+                    child: Text(
+                      controller.isConnected ? 'CONECTADO' : 'INICIAR',
+                      style: const TextStyle(
                         fontSize: 18.0,
                         color: Colors.black,
                         fontFamily: 'Stencil',
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (controller.isConnected) {
+                        setState(() {
+                          controller.disconnectToDevice();
+                          controller.isConnected = false;
+                        });
+                      } else {
+                        await controller.searchDevices();
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Procurando dispositivos!'),
+                          ),
+                        );
+
+                        await Future.delayed(const Duration(seconds: 5));
+
+                        if (controller.devices.isNotEmpty) {
+                          BluetoothDevice? device = await showDialog(
+                            context: context,
+                            builder: (BuildContext context) => ConectionDialog(
+                              devices: controller.devices,
+                            ),
+                          );
+
+                          if (device != null) {
+                            setState(() {
+                              controller.isConnected =
+                                  controller.connectToDevice(device);
+                            });
+                          }
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Nenhum dispositivo encontrado!'),
+                            ),
+                          );
+                        }
+                      }
+                    },
                   ),
                 ),
               ],
