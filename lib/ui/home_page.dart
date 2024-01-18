@@ -80,14 +80,14 @@ class _HomePageState extends State<HomePage> {
                   width: size.width * 0.85,
                   child: Slider(
                     min: 0.0,
-                    max: 1.5,
-                    divisions: 30,
+                    max: 255.0,
+                    divisions: 51,
                     activeColor: const Color(0xFFF5D22E),
                     thumbColor: const Color(0xFFF5D22E),
                     label: controller.velocity.toString(),
                     value: controller.velocity,
                     onChanged: (double value) => setState(() {
-                      String valueSend = value.toStringAsFixed(2);
+                      String valueSend = value.toStringAsFixed(0);
                       controller.changeVelocity(double.parse(valueSend));
                     }),
                     onChangeEnd: (double value) {},
