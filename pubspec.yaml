@@ -10,8 +10,7 @@ dependencies:
   bluetooth_low_energy: ^4.0.0
   flutter:
     sdk: flutter
-  flutter_bluetooth_basic: ^0.1.7
-  flutter_reactive_ble: ^5.2.0
+  flutter_bluetooth_serial: ^0.4.0
   flutter_svg: ^2.0.9
   permission_handler: ^11.0.1
 
