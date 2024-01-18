@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     controller = Controller();
     controller.checkPermissions();
-    controller.searchDevices();
     super.initState();
   }
 
@@ -123,7 +122,9 @@ class _HomePageState extends State<HomePage> {
                 Icons.bluetooth,
                 color: Colors.black,
               ),
-              onPressed: () {},
+              onPressed: () async {
+                controller.searchDevices();
+              },
             ),
           ),
         ],

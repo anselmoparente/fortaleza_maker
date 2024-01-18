@@ -59,12 +59,31 @@ class Controller extends ChangeNotifier {
     }
   }
 
-  void searchDevices() async {
-    _bluetoothManager.startScan(timeout: const Duration(seconds: 4));
+  bool bluetoothStatus = false;
+  List<BluetoothDevice> devices = [];
+
+  void checkBluetooth() {
+    print('state: ${_bluetoothManager.state}');
+  }
+
+  Future<void> searchDevices() async {
+    _bluetoothManager.startScan(timeout: const Duration(seconds: 5));
     _bluetoothManager.scanResults.listen((event) {
       for (int i = 0; i < event.length; i++) {
-        print(event[i].name);
+        bool exists = false;
+
+        for (BluetoothDevice device in devices) {
+          if (event[i].address == device.address) exists = true;
+        }
+
+        if (exists == false) {
+          devices.add(event[i]);
+        }
       }
     });
+  }
+
+  void connectToDevice(BluetoothDevice device) {
+    var connect = _bluetoothManager.connect(device);
   }
 }
