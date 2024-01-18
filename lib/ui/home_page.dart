@@ -113,18 +113,21 @@ class _HomePageState extends State<HomePage> {
           Positioned(
             right: 0.0,
             top: 32.0,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFF5D22E),
-                shape: const CircleBorder(),
+            child: StreamBuilder<int?>(
+              stream: controller.bluetoothManager.state,
+              builder: (context, snapshot) => ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF5D22E),
+                  shape: const CircleBorder(),
+                ),
+                child: Icon(
+                  snapshot.data == 12
+                      ? Icons.bluetooth
+                      : Icons.bluetooth_disabled,
+                  color: Colors.black,
+                ),
+                onPressed: () {},
               ),
-              child: const Icon(
-                Icons.bluetooth,
-                color: Colors.black,
-              ),
-              onPressed: () async {
-                controller.searchDevices();
-              },
             ),
           ),
         ],

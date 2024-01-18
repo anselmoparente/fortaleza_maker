@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Controller extends ChangeNotifier {
-  final BluetoothManager _bluetoothManager = BluetoothManager.instance;
+  final BluetoothManager bluetoothManager = BluetoothManager.instance;
 
   final List<String> _p = ['0', '0', '0', '0'];
   List<String> get p => _p;
@@ -59,16 +60,11 @@ class Controller extends ChangeNotifier {
     }
   }
 
-  bool bluetoothStatus = false;
   List<BluetoothDevice> devices = [];
 
-  void checkBluetooth() {
-    print('state: ${_bluetoothManager.state}');
-  }
-
   Future<void> searchDevices() async {
-    _bluetoothManager.startScan(timeout: const Duration(seconds: 5));
-    _bluetoothManager.scanResults.listen((event) {
+    bluetoothManager.startScan(timeout: const Duration(seconds: 5));
+    bluetoothManager.scanResults.listen((event) {
       for (int i = 0; i < event.length; i++) {
         bool exists = false;
 
@@ -83,7 +79,12 @@ class Controller extends ChangeNotifier {
     });
   }
 
+  void writeData(String message) async {
+    List<int> bytes = utf8.encode(message).toList();
+    await bluetoothManager.writeData(bytes);
+  }
+
   void connectToDevice(BluetoothDevice device) {
-    var connect = _bluetoothManager.connect(device);
+    bluetoothManager.connect(device).then((value) => print(value));
   }
 }
