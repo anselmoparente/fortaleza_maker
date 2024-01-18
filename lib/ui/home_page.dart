@@ -100,54 +100,15 @@ class _HomePageState extends State<HomePage> {
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xFFF5D22E),
                     ),
-                    child: Text(
-                      controller.isConnected ? 'CONECTADO' : 'INICIAR',
-                      style: const TextStyle(
+                    child: const Text(
+                      'INICIAR',
+                      style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.black,
                         fontFamily: 'Stencil',
                       ),
                     ),
-                    onPressed: () async {
-                      if (controller.isConnected) {
-                        setState(() {
-                          controller.disconnectToDevice();
-                          controller.isConnected = false;
-                        });
-                      } else {
-                        await controller.searchDevices();
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Procurando dispositivos!'),
-                          ),
-                        );
-
-                        await Future.delayed(const Duration(seconds: 5));
-
-                        if (controller.devices.isNotEmpty) {
-                          BluetoothDevice? device = await showDialog(
-                            context: context,
-                            builder: (BuildContext context) => ConectionDialog(
-                              devices: controller.devices,
-                            ),
-                          );
-
-                          if (device != null) {
-                            setState(() {
-                              controller.isConnected =
-                                  controller.connectToDevice(device);
-                            });
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Nenhum dispositivo encontrado!'),
-                            ),
-                          );
-                        }
-                      }
-                    },
+                    onPressed: () async {},
                   ),
                 ),
               ],
@@ -160,16 +121,64 @@ class _HomePageState extends State<HomePage> {
               stream: controller.bluetoothManager.state,
               builder: (context, snapshot) => ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFF5D22E),
+                  backgroundColor:
+                      snapshot.data == 12 ? Colors.green[300] : Colors.red[300],
                   shape: const CircleBorder(),
                 ),
                 child: Icon(
-                  snapshot.data == 12
+                  controller.isConnected
                       ? Icons.bluetooth
                       : Icons.bluetooth_disabled,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  if (snapshot.data == 12) {
+                    if (controller.isConnected) {
+                      setState(() {
+                        controller.disconnectToDevice();
+                        controller.isConnected = false;
+                      });
+                    } else {
+                      await controller.searchDevices();
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Procurando dispositivos!'),
+                        ),
+                      );
+
+                      await Future.delayed(const Duration(seconds: 5));
+
+                      if (controller.devices.isNotEmpty) {
+                        BluetoothDevice? device = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) => ConectionDialog(
+                            devices: controller.devices,
+                          ),
+                        );
+
+                        if (device != null) {
+                          setState(() {
+                            controller.isConnected =
+                                controller.connectToDevice(device);
+                          });
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Nenhum dispositivo encontrado!'),
+                          ),
+                        );
+                      }
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Ative o Bluetooth!'),
+                      ),
+                    );
+                  }
+                },
               ),
             ),
           ),
