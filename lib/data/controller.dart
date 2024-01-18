@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
@@ -20,28 +19,39 @@ class Controller extends ChangeNotifier {
   double _velocity = 0.0;
   double get velocity => _velocity;
 
-  void changeValueP({required int value, required int position}) {
-    if (position >= 0 && position < _p.length) {
-      _p[position] = value.toString();
-      log("Lista após a atualização: $p");
-    } else {
-      log("Índice fora dos limites da lista.");
-    }
+  void changeValueP({required int value, required int position}) async {
+    _p[position] = value.toString();
     notifyListeners();
+
+    if (await bluetoothManager.isConnected) {
+      writeData();
+    }
   }
 
-  void changeValueI({required int value, required int position}) {
+  void changeValueI({required int value, required int position}) async {
     _i[position] = value.toString();
     notifyListeners();
+
+    if (await bluetoothManager.isConnected) {
+      writeData();
+    }
   }
 
-  void changeValueD({required int value, required int position}) {
+  void changeValueD({required int value, required int position}) async {
     _d[position] = value.toString();
     notifyListeners();
+
+    if (await bluetoothManager.isConnected) {
+      writeData();
+    }
   }
 
-  void changeVelocity(double value) {
+  void changeVelocity(double value) async {
     _velocity = value;
+
+    if (await bluetoothManager.isConnected) {
+      writeData();
+    }
   }
 
   Future<void> checkPermissions() async {
@@ -82,7 +92,30 @@ class Controller extends ChangeNotifier {
   }
 
   void writeData() async {
-    List<int> bytes = utf8.encode('').toList();
+    late String message;
+
+    List<String> auxP = [];
+    for (String item in p) {
+      auxP.add(item);
+    }
+    auxP.insert(2, '.');
+
+    List<String> auxI = [];
+    for (String item in i) {
+      auxI.add(item);
+    }
+    auxI.insert(2, '.');
+
+    List<String> auxD = [];
+    for (String item in d) {
+      auxD.add(item);
+    }
+    auxD.insert(2, '.');
+
+    message =
+        '${double.parse(auxP.join())}/${double.parse(auxI.join())}/${double.parse(auxD.join())}/$_velocity';
+
+    List<int> bytes = utf8.encode(message).toList();
     await bluetoothManager.writeData(bytes);
   }
 

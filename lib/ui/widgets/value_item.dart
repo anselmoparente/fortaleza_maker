@@ -60,10 +60,28 @@ class _ValueItemState extends State<ValueItem> {
                 ),
                 onPressed: () {
                   setState(() {
-                    widget.controller.changeValueP(
-                      value: int.parse(widget.controller.p[0]) + 1,
-                      position: 0,
-                    );
+                    if (widget.type == 'I') {
+                      if (int.parse(widget.controller.i[0]) < 9) {
+                        widget.controller.changeValueI(
+                          value: int.parse(widget.controller.i[0]) + 1,
+                          position: 0,
+                        );
+                      }
+                    } else if (widget.type == 'P') {
+                      if (int.parse(widget.controller.p[0]) < 9) {
+                        widget.controller.changeValueP(
+                          value: int.parse(widget.controller.p[0]) + 1,
+                          position: 0,
+                        );
+                      }
+                    } else {
+                      if (int.parse(widget.controller.d[0]) < 9) {
+                        widget.controller.changeValueD(
+                          value: int.parse(widget.controller.d[0]) + 1,
+                          position: 0,
+                        );
+                      }
+                    }
                   });
                 },
               ),
@@ -82,7 +100,11 @@ class _ValueItemState extends State<ValueItem> {
                 ),
               ),
               child: Text(
-                widget.controller.p[3],
+                widget.type == 'I'
+                    ? widget.controller.i[0]
+                    : widget.type == 'P'
+                        ? widget.controller.p[0]
+                        : widget.controller.d[0],
                 style: const TextStyle(
                   fontSize: 32.0,
                   fontFamily: 'Stencil',
@@ -105,7 +127,32 @@ class _ValueItemState extends State<ValueItem> {
                   size: 24.0,
                   color: Color(0xFFF5D22E),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    if (widget.type == 'I') {
+                      if (int.parse(widget.controller.i[0]) > 0) {
+                        widget.controller.changeValueI(
+                          value: int.parse(widget.controller.i[0]) - 1,
+                          position: 0,
+                        );
+                      }
+                    } else if (widget.type == 'P') {
+                      if (int.parse(widget.controller.p[0]) > 0) {
+                        widget.controller.changeValueP(
+                          value: int.parse(widget.controller.p[0]) - 1,
+                          position: 0,
+                        );
+                      }
+                    } else {
+                      if (int.parse(widget.controller.d[0]) > 0) {
+                        widget.controller.changeValueD(
+                          value: int.parse(widget.controller.d[0]) - 1,
+                          position: 0,
+                        );
+                      }
+                    }
+                  });
+                },
               ),
             ),
           ],
@@ -131,7 +178,32 @@ class _ValueItemState extends State<ValueItem> {
                     color: Color(0xFFF5D22E),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    if (widget.type == 'I') {
+                      if (int.parse(widget.controller.i[1]) < 9) {
+                        widget.controller.changeValueI(
+                          value: int.parse(widget.controller.i[1]) + 1,
+                          position: 1,
+                        );
+                      }
+                    } else if (widget.type == 'P') {
+                      if (int.parse(widget.controller.p[1]) < 9) {
+                        widget.controller.changeValueP(
+                          value: int.parse(widget.controller.p[1]) + 1,
+                          position: 1,
+                        );
+                      }
+                    } else {
+                      if (int.parse(widget.controller.d[1]) < 9) {
+                        widget.controller.changeValueD(
+                          value: int.parse(widget.controller.d[1]) + 1,
+                          position: 1,
+                        );
+                      }
+                    }
+                  });
+                },
               ),
             ),
             Container(
@@ -148,7 +220,11 @@ class _ValueItemState extends State<ValueItem> {
                 ),
               ),
               child: Text(
-                widget.controller.p[3],
+                widget.type == 'I'
+                    ? widget.controller.i[1]
+                    : widget.type == 'P'
+                        ? widget.controller.p[1]
+                        : widget.controller.d[1],
                 style: const TextStyle(
                   fontSize: 32.0,
                   fontFamily: 'Stencil',
@@ -171,7 +247,32 @@ class _ValueItemState extends State<ValueItem> {
                   size: 24.0,
                   color: Color(0xFFF5D22E),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    if (widget.type == 'I') {
+                      if (int.parse(widget.controller.i[1]) > 0) {
+                        widget.controller.changeValueI(
+                          value: int.parse(widget.controller.i[1]) - 1,
+                          position: 1,
+                        );
+                      }
+                    } else if (widget.type == 'P') {
+                      if (int.parse(widget.controller.p[1]) > 0) {
+                        widget.controller.changeValueP(
+                          value: int.parse(widget.controller.p[1]) - 1,
+                          position: 1,
+                        );
+                      }
+                    } else {
+                      if (int.parse(widget.controller.d[1]) > 0) {
+                        widget.controller.changeValueD(
+                          value: int.parse(widget.controller.d[1]) - 1,
+                          position: 1,
+                        );
+                      }
+                    }
+                  });
+                },
               ),
             ),
           ],
@@ -206,7 +307,32 @@ class _ValueItemState extends State<ValueItem> {
                     color: Color(0xFFF5D22E),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    if (widget.type == 'I') {
+                      if (int.parse(widget.controller.i[2]) < 9) {
+                        widget.controller.changeValueI(
+                          value: int.parse(widget.controller.i[2]) + 1,
+                          position: 2,
+                        );
+                      }
+                    } else if (widget.type == 'P') {
+                      if (int.parse(widget.controller.p[2]) < 9) {
+                        widget.controller.changeValueP(
+                          value: int.parse(widget.controller.p[2]) + 1,
+                          position: 2,
+                        );
+                      }
+                    } else {
+                      if (int.parse(widget.controller.d[2]) < 9) {
+                        widget.controller.changeValueD(
+                          value: int.parse(widget.controller.d[2]) + 1,
+                          position: 2,
+                        );
+                      }
+                    }
+                  });
+                },
               ),
             ),
             Container(
@@ -223,7 +349,11 @@ class _ValueItemState extends State<ValueItem> {
                 ),
               ),
               child: Text(
-                widget.controller.p[3],
+                widget.type == 'I'
+                    ? widget.controller.i[2]
+                    : widget.type == 'P'
+                        ? widget.controller.p[2]
+                        : widget.controller.d[2],
                 style: const TextStyle(
                   fontSize: 32.0,
                   fontFamily: 'Stencil',
@@ -246,7 +376,32 @@ class _ValueItemState extends State<ValueItem> {
                   size: 24.0,
                   color: Color(0xFFF5D22E),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    if (widget.type == 'I') {
+                      if (int.parse(widget.controller.i[2]) > 0) {
+                        widget.controller.changeValueI(
+                          value: int.parse(widget.controller.i[2]) - 1,
+                          position: 2,
+                        );
+                      }
+                    } else if (widget.type == 'P') {
+                      if (int.parse(widget.controller.p[2]) > 0) {
+                        widget.controller.changeValueP(
+                          value: int.parse(widget.controller.p[2]) - 1,
+                          position: 2,
+                        );
+                      }
+                    } else {
+                      if (int.parse(widget.controller.d[2]) > 0) {
+                        widget.controller.changeValueD(
+                          value: int.parse(widget.controller.d[2]) - 1,
+                          position: 2,
+                        );
+                      }
+                    }
+                  });
+                },
               ),
             ),
           ],
@@ -272,7 +427,32 @@ class _ValueItemState extends State<ValueItem> {
                     color: Color(0xFFF5D22E),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    if (widget.type == 'I') {
+                      if (int.parse(widget.controller.i[3]) < 9) {
+                        widget.controller.changeValueI(
+                          value: int.parse(widget.controller.i[3]) + 1,
+                          position: 3,
+                        );
+                      }
+                    } else if (widget.type == 'P') {
+                      if (int.parse(widget.controller.p[3]) < 9) {
+                        widget.controller.changeValueP(
+                          value: int.parse(widget.controller.p[3]) + 1,
+                          position: 3,
+                        );
+                      }
+                    } else {
+                      if (int.parse(widget.controller.d[3]) < 9) {
+                        widget.controller.changeValueD(
+                          value: int.parse(widget.controller.d[3]) + 1,
+                          position: 3,
+                        );
+                      }
+                    }
+                  });
+                },
               ),
             ),
             Container(
@@ -289,7 +469,11 @@ class _ValueItemState extends State<ValueItem> {
                 ),
               ),
               child: Text(
-                widget.controller.p[3],
+                widget.type == 'I'
+                    ? widget.controller.i[3]
+                    : widget.type == 'P'
+                        ? widget.controller.p[3]
+                        : widget.controller.d[3],
                 style: const TextStyle(
                   fontSize: 32.0,
                   fontFamily: 'Stencil',
@@ -312,7 +496,32 @@ class _ValueItemState extends State<ValueItem> {
                   size: 24.0,
                   color: Color(0xFFF5D22E),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    if (widget.type == 'I') {
+                      if (int.parse(widget.controller.i[3]) > 0) {
+                        widget.controller.changeValueI(
+                          value: int.parse(widget.controller.i[3]) - 1,
+                          position: 3,
+                        );
+                      }
+                    } else if (widget.type == 'P') {
+                      if (int.parse(widget.controller.p[3]) > 0) {
+                        widget.controller.changeValueP(
+                          value: int.parse(widget.controller.p[3]) - 1,
+                          position: 3,
+                        );
+                      }
+                    } else {
+                      if (int.parse(widget.controller.d[3]) > 0) {
+                        widget.controller.changeValueD(
+                          value: int.parse(widget.controller.d[3]) - 1,
+                          position: 3,
+                        );
+                      }
+                    }
+                  });
+                },
               ),
             ),
           ],
