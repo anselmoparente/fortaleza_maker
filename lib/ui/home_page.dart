@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                   shape: const CircleBorder(),
                 ),
                 child: Icon(
-                  controller.isConnected
+                  (controller.isConnected && snapshot.data == 12)
                       ? Icons.bluetooth
                       : Icons.bluetooth_disabled,
                   color: Colors.white,
