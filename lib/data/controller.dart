@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:bluetooth_classic/bluetooth_classic.dart';
+import 'package:bluetooth_classic/models/device.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
+
 import 'package:permission_handler/permission_handler.dart';
 
 class Controller extends ChangeNotifier {
-  final BluetoothManager bluetoothManager = BluetoothManager.instance;
+  final bluetoothClassic = BluetoothClassic();
 
   final List<String> _p = ['0', '0', '0', '0'];
   List<String> get p => _p;
@@ -23,35 +25,35 @@ class Controller extends ChangeNotifier {
     _p[position] = value.toString();
     notifyListeners();
 
-    if (await bluetoothManager.isConnected) {
-      writeData();
-    }
+    // if (await bluetoothManager.isConnected) {
+    //   writeData();
+    // }
   }
 
   void changeValueI({required int value, required int position}) async {
     _i[position] = value.toString();
     notifyListeners();
 
-    if (await bluetoothManager.isConnected) {
-      writeData();
-    }
+    // if (await bluetoothManager.isConnected) {
+    //   writeData();
+    // }
   }
 
   void changeValueD({required int value, required int position}) async {
     _d[position] = value.toString();
     notifyListeners();
 
-    if (await bluetoothManager.isConnected) {
-      writeData();
-    }
+    // if (await bluetoothManager.isConnected) {
+    //   writeData();
+    // }
   }
 
   void changeVelocity(double value) async {
     _velocity = value;
 
-    if (await bluetoothManager.isConnected) {
-      writeData();
-    }
+    // if (await bluetoothManager.isConnected) {
+    //   writeData();
+    // }
   }
 
   Future<void> checkPermissions() async {
@@ -70,25 +72,32 @@ class Controller extends ChangeNotifier {
     }
   }
 
-  List<BluetoothDevice> devices = [];
+  List<Device> devices = [];
   bool isConnected = false;
 
   Future<void> searchDevices() async {
     devices.clear();
-    bluetoothManager.startScan(timeout: const Duration(seconds: 5));
-    bluetoothManager.scanResults.listen((event) {
-      for (int i = 0; i < event.length; i++) {
-        bool exists = false;
-
-        for (BluetoothDevice device in devices) {
-          if (event[i].address == device.address) exists = true;
-        }
-
-        if (exists == false) {
-          devices.add(event[i]);
-        }
-      }
+    bluetoothClassic.startScan();
+    bluetoothClassic.onDeviceDiscovered().listen((event) {
+      print('device: ${event.name}');
     });
+    await Future.delayed(const Duration(seconds: 5));
+    bluetoothClassic.stopScan();
+
+    print(bluetoothClassic.getPairedDevices());
+    // bluetoothManager.scanResults.listen((event) {
+    //   for (int i = 0; i < event.length; i++) {
+    //     bool exists = false;
+
+    //     for (BluetoothDevice device in devices) {/
+    //       if (event[i].address == device.address) exists = true;
+    //     }
+
+    //     if (exists == false) {
+    //       devices.add(event[i]);
+    //     }
+    //   }
+    // });
   }
 
   void writeData() async {
@@ -116,15 +125,15 @@ class Controller extends ChangeNotifier {
         '${double.parse(auxP.join())}/${double.parse(auxI.join())}/${double.parse(auxD.join())}/$_velocity';
 
     List<int> bytes = utf8.encode(message).toList();
-    await bluetoothManager.writeData(bytes);
+    // await bluetoothManager.writeData(bytes);
   }
 
-  bool connectToDevice(BluetoothDevice device) {
-    bluetoothManager.connect(device);
+  bool connectToDevice(Device device) {
+    // bluetoothManager.connect(device);
     return true;
   }
 
   void disconnectToDevice() {
-    bluetoothManager.disconnect();
+    // bluetoothManager.disconnect();
   }
 }

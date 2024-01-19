@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fortaleza_maker/data/controller.dart';
 import 'package:fortaleza_maker/ui/widgets/conection_dialog.dart';
@@ -108,80 +107,82 @@ class _HomePageState extends State<HomePage> {
                         fontFamily: 'Stencil',
                       ),
                     ),
-                    onPressed: () async {},
+                    onPressed: () async {
+                      controller.searchDevices();
+                    },
                   ),
                 ),
               ],
             ),
           ),
-          Positioned(
-            right: 0.0,
-            top: 32.0,
-            child: StreamBuilder<int?>(
-              stream: controller.bluetoothManager.state,
-              builder: (context, snapshot) => ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      snapshot.data == 12 ? Colors.green[300] : Colors.red[300],
-                  shape: const CircleBorder(),
-                ),
-                child: Icon(
-                  (controller.isConnected && snapshot.data == 12)
-                      ? Icons.bluetooth
-                      : Icons.bluetooth_disabled,
-                  color: Colors.white,
-                ),
-                onPressed: () async {
-                  if (snapshot.data == 12) {
-                    if (controller.isConnected) {
-                      setState(() {
-                        controller.disconnectToDevice();
-                        controller.isConnected = false;
-                      });
-                    } else {
-                      await controller.searchDevices();
+          // Positioned(
+          //   right: 0.0,
+          //   top: 32.0,
+          //   child: StreamBuilder<int?>(
+          //     stream: controller.bluetoothManager.state,
+          //     builder: (context, snapshot) => ElevatedButton(
+          //       style: ElevatedButton.styleFrom(
+          //         backgroundColor:
+          //             snapshot.data == 12 ? Colors.green[300] : Colors.red[300],
+          //         shape: const CircleBorder(),
+          //       ),
+          //       child: Icon(
+          //         (controller.isConnected && snapshot.data == 12)
+          //             ? Icons.bluetooth
+          //             : Icons.bluetooth_disabled,
+          //         color: Colors.white,
+          //       ),
+          //       onPressed: () async {
+          //         if (snapshot.data == 12) {
+          //           if (controller.isConnected) {
+          //             setState(() {
+          //               controller.disconnectToDevice();
+          //               controller.isConnected = false;
+          //             });
+          //           } else {
+          //             await controller.searchDevices();
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Procurando dispositivos!'),
-                        ),
-                      );
+          //             ScaffoldMessenger.of(context).showSnackBar(
+          //               const SnackBar(
+          //                 content: Text('Procurando dispositivos!'),
+          //               ),
+          //             );
 
-                      await Future.delayed(const Duration(seconds: 5));
+          //             await Future.delayed(const Duration(seconds: 5));
 
-                      if (controller.devices.isNotEmpty) {
-                        BluetoothDevice? device = await showDialog(
-                          context: context,
-                          builder: (BuildContext context) => ConectionDialog(
-                            devices: controller.devices,
-                          ),
-                        );
+          //             if (controller.devices.isNotEmpty) {
+          //               BluetoothDevice? device = await showDialog(
+          //                 context: context,
+          //                 builder: (BuildContext context) => ConectionDialog(
+          //                   devices: controller.devices,
+          //                 ),
+          //               );
 
-                        if (device != null) {
-                          setState(() {
-                            controller.isConnected =
-                                controller.connectToDevice(device);
-                          });
-                        }
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Nenhum dispositivo encontrado!'),
-                          ),
-                        );
-                      }
-                    }
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Ative o Bluetooth!'),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
-          ),
+          //               if (device != null) {
+          //                 setState(() {
+          //                   controller.isConnected =
+          //                       controller.connectToDevice(device);
+          //                 });
+          //               }
+          //             } else {
+          //               ScaffoldMessenger.of(context).showSnackBar(
+          //                 const SnackBar(
+          //                   content: Text('Nenhum dispositivo encontrado!'),
+          //                 ),
+          //               );
+          //             }
+          //           }
+          //         } else {
+          //           ScaffoldMessenger.of(context).showSnackBar(
+          //             const SnackBar(
+          //               content: Text('Ative o Bluetooth!'),
+          //             ),
+          //           );
+          //         }
+          //       },
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

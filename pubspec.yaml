@@ -7,10 +7,10 @@ environment:
   sdk: '>=3.1.0 <4.0.0'
 
 dependencies:
+  bluetooth_classic: ^0.0.1
   bluetooth_low_energy: ^4.0.0
   flutter:
     sdk: flutter
-  flutter_bluetooth_serial: ^0.4.0
   flutter_svg: ^2.0.9
   permission_handler: ^11.0.1
 

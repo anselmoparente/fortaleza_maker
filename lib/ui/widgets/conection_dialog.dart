@@ -1,8 +1,8 @@
+import 'package:bluetooth_classic/models/device.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bluetooth_basic/flutter_bluetooth_basic.dart';
 
 class ConectionDialog extends StatelessWidget {
-  final List<BluetoothDevice> devices;
+  final List<Device> devices;
 
   const ConectionDialog({
     required this.devices,
