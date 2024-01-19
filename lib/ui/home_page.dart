@@ -108,7 +108,17 @@ class _HomePageState extends State<HomePage> {
                         fontFamily: 'Stencil',
                       ),
                     ),
-                    onPressed: () async {},
+                    onPressed: () async {
+                      if (controller.isConnected) {
+                        controller.changePlay();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Conecte a um dispositivo!'),
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ),
               ],
@@ -130,8 +140,8 @@ class _HomePageState extends State<HomePage> {
               ),
               onPressed: () async {
                 if (controller.isConnected) {
+                  await controller.disconnectToDevice();
                   setState(() {
-                    controller.disconnectToDevice();
                     controller.isConnected = false;
                   });
                 } else {
@@ -153,9 +163,9 @@ class _HomePageState extends State<HomePage> {
                     );
 
                     if (device != null) {
+                      bool value = await controller.connectToDevice(device);
                       setState(() {
-                        controller.isConnected =
-                            controller.connectToDevice(device);
+                        controller.isConnected = value;
                       });
                     }
                   } else {
