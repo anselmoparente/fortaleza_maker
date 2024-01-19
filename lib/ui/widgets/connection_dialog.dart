@@ -32,29 +32,32 @@ class ConectionDialog extends StatelessWidget {
         child: ListView.builder(
           itemCount: devices.length,
           itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () => Navigator.pop(context, devices[index]),
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF5D22E),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12.0),
+            return Padding(
+              padding: EdgeInsets.only(top: index != 0 ? 8.0 : 0.0),
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context, devices[index]),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFF5D22E),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12.0),
+                    ),
                   ),
-                ),
-                child: SizedBox(
-                  height: size.height * 0.05,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.only(left: 16.0),
-                        child: Icon(Icons.devices),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(devices[index].name ?? 'Unknown'),
-                      ),
-                    ],
+                  child: SizedBox(
+                    height: size.height * 0.05,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
+                          child: Icon(Icons.devices),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(devices[index].name ?? 'Unknown'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

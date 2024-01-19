@@ -76,28 +76,18 @@ class Controller extends ChangeNotifier {
   bool isConnected = false;
 
   Future<void> searchDevices() async {
-    devices.clear();
-    bluetoothClassic.startScan();
-    bluetoothClassic.onDeviceDiscovered().listen((event) {
-      print('device: ${event.name}');
-    });
-    await Future.delayed(const Duration(seconds: 5));
-    bluetoothClassic.stopScan();
-
-    print(bluetoothClassic.getPairedDevices());
-    // bluetoothManager.scanResults.listen((event) {
-    //   for (int i = 0; i < event.length; i++) {
-    //     bool exists = false;
-
-    //     for (BluetoothDevice device in devices) {/
-    //       if (event[i].address == device.address) exists = true;
-    //     }
-
-    //     if (exists == false) {
-    //       devices.add(event[i]);
-    //     }
+    // devices.clear();
+    // bluetoothClassic.startScan();
+    // bluetoothClassic.onDeviceDiscovered().listen((event) {
+    //   if (!devices.contains(event)) {
+    //     devices.add(event);
     //   }
     // });
+    // await Future.delayed(const Duration(seconds: 5));
+    // bluetoothClassic.stopScan();
+
+    devices.clear();
+    devices = await bluetoothClassic.getPairedDevices();
   }
 
   void writeData() async {
