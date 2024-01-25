@@ -139,7 +139,8 @@ class Controller extends ChangeNotifier {
   }
 
   Future<bool> connectToDevice(Device device) async {
-    bool result = await bluetoothClassic.connect(device.address, '');
+    bool result = await bluetoothClassic.connect(
+        device.address, '00001101-0000-1000-8000-00805F9B34FB');
     readData();
     return result;
   }
