@@ -11,8 +11,14 @@ dependencies:
   bluetooth_low_energy: ^4.0.0
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   flutter_svg: ^2.0.9
   permission_handler: ^11.0.1
+
+flutter_launcher_icons:
+  android: true
+  image_path: "assets/icon_fortaleza_maker.png"
+  min_sdk_android: 21
 
 dev_dependencies:
   flutter_test:
