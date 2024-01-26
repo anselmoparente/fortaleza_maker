@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bluetooth_classic/bluetooth_classic.dart';
 import 'package:bluetooth_classic/models/device.dart';
 import 'package:flutter/material.dart';
@@ -53,10 +55,6 @@ class Controller extends ChangeNotifier {
 
   void changeVelocity(double value) async {
     _velocity = value;
-
-    if (isConnected) {
-      writeData();
-    }
   }
 
   void changePlay() async {
@@ -91,23 +89,14 @@ class Controller extends ChangeNotifier {
   bool isConnected = false;
 
   Future<void> searchDevices() async {
-    // devices.clear();
-    // bluetoothClassic.startScan();
-    // bluetoothClassic.onDeviceDiscovered().listen((event) {
-    //   if (!devices.contains(event)) {
-    //     devices.add(event);
-    //   }
-    // });
-    // await Future.delayed(const Duration(seconds: 5));
-    // bluetoothClassic.stopScan();
-
     devices.clear();
     devices = await bluetoothClassic.getPairedDevices();
   }
 
   void readData() {
     bluetoothClassic.onDeviceDataReceived().listen((event) {
-      data = String.fromCharCodes(event);
+      print('deu certo');
+      print('teste: caracteres(${event.length}) texto->' + utf8.decode(event));
     });
   }
 

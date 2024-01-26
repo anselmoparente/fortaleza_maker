@@ -90,7 +90,11 @@ class _HomePageState extends State<HomePage> {
                       String valueSend = value.toStringAsFixed(0);
                       controller.changeVelocity(double.parse(valueSend));
                     }),
-                    onChangeEnd: (double value) {},
+                    onChangeEnd: (double value) {
+                      if (controller.isConnected) {
+                        controller.writeData();
+                      }
+                    },
                   ),
                 ),
                 Container(
@@ -152,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
 
-                  await Future.delayed(const Duration(seconds: 5));
+                  await Future.delayed(const Duration(seconds: 2));
 
                   if (controller.devices.isNotEmpty) {
                     Device? device = await showDialog(
